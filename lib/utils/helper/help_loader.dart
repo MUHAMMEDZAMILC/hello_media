@@ -76,9 +76,9 @@ class PageEntryLoader extends StatelessWidget {
     return  Container(
       width: ScreenUtil.screenWidth,
       height: ScreenUtil.screenHeight,
-      color: ColorResources.WHITE,
+      color: ColorResources.SCAFFOLDBG,
       child: const Center(
-        child: CircularProgressIndicator(color: secondarycolor,),
+        child: CircularProgressIndicator(color: primarycolor,),
       ),
     );
   }

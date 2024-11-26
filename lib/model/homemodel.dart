@@ -31,8 +31,8 @@ class HomeContent {
     Map<String, dynamic> toJson() => {
         "user": user == null ? [] : List<dynamic>.from(user!.map((x) => x)),
         "banners": banners == null ? [] : List<dynamic>.from(banners!.map((x) => x)),
-        "category_dict": categoryDict == null ? [] : List<dynamic>.from(categoryDict!.map((x) => x.toJson())),
-        "results": results == null ? [] : List<dynamic>.from(results!.map((x) => x.toJson())),
+        "category_dict": categoryDict == null ? [] : List<CategoryDict>.from(categoryDict!.map((x) => x.toJson())),
+        "results": results == null ? [] : List<Result>.from(results!.map((x) => x.toJson())),
     };
 }
 
