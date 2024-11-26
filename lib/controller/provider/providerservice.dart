@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:hello_media/model/categorymodel.dart';
 import 'package:hello_media/model/loginmodel.dart';
 import 'package:hello_media/model/loginres_model.dart';
+import 'package:hello_media/utils/globalvariables.dart';
+import 'package:hello_media/utils/string.dart';
 
 import '../../model/homemodel.dart';
 import '../../utils/helper/help_toast.dart';
@@ -13,7 +15,7 @@ import 'package:http/http.dart' as http;
 class ProviderService {
 
   dynamic header = {
-      'Authorization': 'Bearer ',
+      'Authorization': 'Bearer$accesstoken',
     };
 
 
@@ -40,13 +42,15 @@ class ProviderService {
       return empty;
     }
   }
+
+
 // get home content api service
   gethomepagecontent(context) async{
      var url ="$baseUrl$gethomeUrl";
     log(url);
     try {
       final Uri uri = Uri.parse(url);
-    var response = await http.get(uri, );
+    var response = await http.get(uri,);
     log(response.body);
     if (response.statusCode == 202) {
       try {
@@ -65,25 +69,29 @@ class ProviderService {
   }
    // get category api service
   getcategories(context) async{
+    List<Category> emptylist = [];
     var url ="$baseUrl$getcategoryUrl";
     log(url);
     try {
       final Uri uri = Uri.parse(url);
     var response = await http.get(uri, );
     log(response.body);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 202) {
       try {
         return categoryModelFromJson(response.body).categories;
       } catch (e) {
-        rethrow;
+        return emptylist;
       }
     } else {
       snackBar(context, message: "invalid");
+      return emptylist;
     }
     }on SocketException{
       snackBar(context, message: 'Network Offline');
+      return emptylist;
     } catch (e) {
       log(e.toString());
+      return emptylist;
     }
     
   }

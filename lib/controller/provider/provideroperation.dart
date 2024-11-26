@@ -10,6 +10,8 @@ import 'package:hello_media/utils/globalvariables.dart';
 import 'package:hello_media/utils/helper/help_toast.dart';
 import 'package:hello_media/utils/string.dart';
 
+import '../../model/categorymodel.dart';
+
 class ProviderOperation extends ChangeNotifier {
   ProviderService ntop = ProviderService();
   bool ispageloading = false,isbtnloading = false;
@@ -35,6 +37,14 @@ late HomeContent homedata;
   gethomecontent(context) async {
     ispageloading = true;
     homedata = await ntop.gethomepagecontent(context);
+    ispageloading = false;
+    notifyListeners();
+  }
+// get category menthod
+  List<Category> categorieslist = [];
+  getcate(context) async {
+    ispageloading = true;
+    categorieslist = await ntop.getcategories(context);
     ispageloading = false;
     notifyListeners();
   }
