@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hello_media/controller/shared_pref.dart';
+import 'package:hello_media/utils/globalvariables.dart';
 import 'package:hello_media/utils/helper/help_screensize.dart';
 import 'package:hello_media/utils/helper/pagenavigator.dart';
 import 'package:hello_media/utils/string.dart';
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () async{
       String? acctoken = await SharedPref.getstring(accesskey);
       if (acctoken!=null && acctoken !='') {
-        acctoken = acctoken;
+        accesstoken = acctoken;
         Screen.openAsNewPage(context, const HomeScreen());
       }else{
  Screen.openAsNewPage(context, const OtpVerifyScreen());

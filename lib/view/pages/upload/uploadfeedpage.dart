@@ -1,16 +1,24 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hello_media/model/categorymodel.dart';
+import 'package:hello_media/model/feedpost_model.dart';
+import 'package:hello_media/model/feedres_model.dart';
 import 'package:hello_media/utils/helper/help_loader.dart';
 import 'package:hello_media/utils/helper/help_screensize.dart';
+import 'package:hello_media/utils/helper/help_toast.dart';
 import 'package:hello_media/utils/helper/pagenavigator.dart';
 import 'package:hello_media/utils/theme/colors.dart';
 import 'package:hello_media/utils/theme/dimensions.dart';
 import 'package:hello_media/utils/theme/theme_data.dart';
 import 'package:hello_media/view/components/appsvg.dart';
 import 'package:hello_media/view/components/apptext.dart';
+import 'package:hello_media/view/components/apptextfeild.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +36,7 @@ class _UploadFeedScreenState extends State<UploadFeedScreen> {
   final ImagePicker picker = ImagePicker();
   XFile? image, video;
   List<int> selectedcate = [];
+  TextEditingController descriptionCtrl = TextEditingController(text: 'Lorem ipsum dolor sit amet consectetur. Leo ac lorem faucli bus facilisis tellus. At vitae dis commodo nunc sollicitudin elementum suspendisse...Lorem ipsum dolor sit amet consectetur. Leo ac lorem faucli bus facilisis tellus. At vitae dis commodo nunc sollicitudin elementum suspendisse...');
   @override
   void initState() {
     Provider.of<ProviderOperation>(context, listen: false).getcate(context);
@@ -38,6 +47,7 @@ class _UploadFeedScreenState extends State<UploadFeedScreen> {
   Widget build(BuildContext context) {
     final service = Provider.of<ProviderOperation>(context, listen: false);
     final liveservice = Provider.of<ProviderOperation>(context, listen: true);
+    liveservice.isbtnloading = false;
     ScreenUtil.init(context);
     return liveservice.ispageloading
         ? const PageEntryLoader()
@@ -57,20 +67,48 @@ class _UploadFeedScreenState extends State<UploadFeedScreen> {
                     size: 16,
                     weight: FontWeight.w500,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17.3),
-                        color: primarycolor.withOpacity(0.06),
-                        border: Border.all(
-                            color: primarycolor.withOpacity(0.4), width: 0.84)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: padding, horizontal: paddingLarge),
-                      child: AppText(
-                        text: 'Share Feed',
-                        weight: FontWeight.w400,
-                        size: 13,
-                        color: ColorResources.WHITE,
+                  InkWell(
+                    onTap: () async{
+                      if (video==null) {
+                        snackBar(context, message: 'Please Select Video');
+                        return;
+                      }
+                      if (image==null) {
+                        snackBar(context, message: 'Please Select Thumbnail');
+                        return;
+                      }
+                      if (selectedcate.isEmpty) {
+                        snackBar(context, message: 'Please Select Category');
+                      }
+
+                      FeedUpload body = FeedUpload();
+                      body.video = File(video!.path);
+                      body.image = File(image!.path);
+                      body.desc = descriptionCtrl.text;
+                      body.category = selectedcate;
+                     FeedRes res =   await service.uploadfeed(context, body);
+                     if (res==true) {
+                       service.gethomecontent(context);
+                       Screen.close(context);
+                     }
+
+                      
+                    },
+                    child: liveservice.isbtnloading? const SizedBox(width: 30,height: 30,child: CircularProgressIndicator(color: primarycolor,),): Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17.3),
+                          color: primarycolor.withOpacity(0.06),
+                          border: Border.all(
+                              color: primarycolor.withOpacity(0.4), width: 0.84)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: padding, horizontal: paddingLarge),
+                        child: AppText(
+                          text: 'Share Feed',
+                          weight: FontWeight.w400,
+                          size: 13,
+                          color: ColorResources.WHITE,
+                        ),
                       ),
                     ),
                   )
@@ -159,13 +197,14 @@ class _UploadFeedScreenState extends State<UploadFeedScreen> {
                         size: 14,
                       ),
                       gap,
-                      AppText(
-                        text:
-                            'Lorem ipsum dolor sit amet consectetur. Leo ac lorem faucli bus facilisis tellus. At vitae dis commodo nunc sollicitudin elementum suspendisse...Lorem ipsum dolor sit amet consectetur. Leo ac lorem faucli bus facilisis tellus. At vitae dis commodo nunc sollicitudin elementum suspendisse...',
-                        weight: FontWeight.w300,
-                        size: 11,
-                        color: ColorResources.WHITE.withOpacity(0.6),
-                      ),
+                      AppTextFeild(controller: descriptionCtrl,multiline: 2,),
+                      // AppText(
+                      //   text:
+                      //       'Lorem ipsum dolor sit amet consectetur. Leo ac lorem faucli bus facilisis tellus. At vitae dis commodo nunc sollicitudin elementum suspendisse...Lorem ipsum dolor sit amet consectetur. Leo ac lorem faucli bus facilisis tellus. At vitae dis commodo nunc sollicitudin elementum suspendisse...',
+                      //   weight: FontWeight.w300,
+                      //   size: 11,
+                      //   color: ColorResources.WHITE.withOpacity(0.6),
+                      // ),
                       gap26,
                       AppText(
                         text: 'Categories This Project',

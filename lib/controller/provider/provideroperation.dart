@@ -3,12 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:hello_media/controller/provider/providerservice.dart';
 import 'package:hello_media/controller/shared_pref.dart';
+import 'package:hello_media/model/feedpost_model.dart';
+import 'package:hello_media/model/feedres_model.dart';
 import 'package:hello_media/model/homemodel.dart';
 import 'package:hello_media/model/loginmodel.dart';
 import 'package:hello_media/model/loginres_model.dart';
 import 'package:hello_media/utils/globalvariables.dart';
 import 'package:hello_media/utils/helper/help_toast.dart';
 import 'package:hello_media/utils/string.dart';
+import 'package:hello_media/utils/theme/colors.dart';
 
 import '../../model/categorymodel.dart';
 
@@ -47,5 +50,20 @@ late HomeContent homedata;
     categorieslist = await ntop.getcategories(context);
     ispageloading = false;
     notifyListeners();
+  }
+
+  // upload feed method
+  uploadfeed(context,FeedUpload body) async {
+    isbtnloading = true;
+    notifyListeners();
+    FeedRes res = await ntop.uploadfeed(context, body);
+    if (res.status==true) {
+       snackBar(context, message: 'Successfully Upload',kcolor: ColorResources.AMTGREEN);
+    }else{
+       snackBar(context, message: 'Share Feed Failed');
+    }
+    isbtnloading = false;
+    notifyListeners();
+    return res;
   }
 }

@@ -49,7 +49,7 @@ class AppTextFeild extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return Container(
-      height: 60.78,
+      height: multiline!=null?(60.78*multiline!): 60.78,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
@@ -68,6 +68,7 @@ class AppTextFeild extends StatelessWidget {
               const TextStyle(
                 color: ColorResources.WHITE,
                 fontWeight: FontWeight.w500,
+                
                 fontSize: 14,
               ),
            inputFormatters: digitsonly==true

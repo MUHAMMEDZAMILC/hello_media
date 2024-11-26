@@ -2,20 +2,23 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:hello_media/model/categorymodel.dart';
+import 'package:hello_media/model/feedpost_model.dart';
+import 'package:hello_media/model/feedres_model.dart';
 import 'package:hello_media/model/loginmodel.dart';
 import 'package:hello_media/model/loginres_model.dart';
 import 'package:hello_media/utils/globalvariables.dart';
-import 'package:hello_media/utils/string.dart';
 
 import '../../model/homemodel.dart';
 import '../../utils/helper/help_toast.dart';
+import '../multipart.dart';
 import '../urls.dart';
 import 'package:http/http.dart' as http;
 
 class ProviderService {
 
   dynamic header = {
-      'Authorization': 'Bearer$accesstoken',
+      'Authorization': 'Bearer $accesstoken',
+      'Content-Type': 'multipart/form-data'
     };
 
 
@@ -94,5 +97,25 @@ class ProviderService {
       return emptylist;
     }
     
+  }
+
+  // upload feed api service
+  uploadfeed(context,FeedUpload feed)async {
+    FeedRes empty = FeedRes();
+     var url = "$baseUrl$postfeedUrl";
+    log(url);
+    try {
+      final video = await http.MultipartFile.fromPath("video", feed.video!.path);
+      final image = await http.MultipartFile.fromPath("image", feed.image!.path);
+      var res =  await MultipartApi.upload(context,
+        endPoint: postfeedUrl, video: [video],image: [image], body: feed);
+        return feedResFromJson(res);
+    }on SocketException {
+      snackBar(context, message: 'Network Offline');
+      return empty;
+    } catch (e) {
+      log(e.toString());
+      return empty;
+    }
   }
 }
