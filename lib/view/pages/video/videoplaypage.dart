@@ -48,7 +48,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                     // child: 
                     VideoPlayer(controller),
                     // ),
-                    _ControlsOverlay(controller: controller)
+                    ControlsOverlay(controller: controller)
             
                 ],
               )
@@ -65,8 +65,8 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   }
 }
 
-class _ControlsOverlay extends StatefulWidget {
-  const _ControlsOverlay({required this.controller});
+class ControlsOverlay extends StatefulWidget {
+  const ControlsOverlay({required this.controller});
 
   static const List<Duration> _exampleCaptionOffsets = <Duration>[
     Duration(seconds: -10),
@@ -93,14 +93,14 @@ class _ControlsOverlay extends StatefulWidget {
   final VideoPlayerController controller;
 
   @override
-  State<_ControlsOverlay> createState() => _ControlsOverlayState();
+  State<ControlsOverlay> createState() => ControlsOverlayState();
 }
 
-class _ControlsOverlayState extends State<_ControlsOverlay> {
+class ControlsOverlayState extends State<ControlsOverlay> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 70,
+      height: 50,
       child: Stack(
         children: <Widget>[
           AnimatedSwitcher(
@@ -142,7 +142,7 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
               },
               itemBuilder: (BuildContext context) {
                 return <PopupMenuItem<Duration>>[
-                  for (final Duration offsetDuration in _ControlsOverlay._exampleCaptionOffsets)
+                  for (final Duration offsetDuration in ControlsOverlay._exampleCaptionOffsets)
                     PopupMenuItem<Duration>(
                       value: offsetDuration,
                       child: AppText( text: '${offsetDuration.inMilliseconds}ms',color: primarycolor,),
@@ -171,7 +171,7 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
               },
               itemBuilder: (BuildContext context) {
                 return <PopupMenuItem<double>>[
-                  for (final double speed in _ControlsOverlay._examplePlaybackRates)
+                  for (final double speed in ControlsOverlay._examplePlaybackRates)
                     PopupMenuItem<double>(
                       value: speed,
                       child: AppText(text: '${speed}x',color: primarycolor,),
