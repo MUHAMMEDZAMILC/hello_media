@@ -6,6 +6,7 @@ const double paddingLarge = padding * 2;
 const double paddingXL = padding * 4;
 const double paddingTiny = paddingSmall / 2;
 const double padding26 = 26;
+const double padding17 = 17;
 
 
 const gap = SizedBox(height: padding);

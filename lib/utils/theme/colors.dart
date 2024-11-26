@@ -9,6 +9,7 @@ import 'package:hello_media/utils/theme/theme_data.dart';
 class ColorResources {
   static const Color SCAFFOLDBGOLD = Color(0xffF7F8FD);
   static const Color SCAFFOLDBG = Color(0xFF171717);
+  static const Color HINTTEXT = Color(0xFFBDBDBD);
   static const Color PRIMARY = Color(0xff141e3c);
   static const Color GREY1 = Color(0xff777aae);
   static const Color SECONDARY = Color(0xffff1b6f);

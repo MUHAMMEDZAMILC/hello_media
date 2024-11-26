@@ -48,106 +48,62 @@ class AppTextFeild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    return SizedBox(
-      width: width ?? ScreenUtil.screenWidth,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          2.hBox,
-          (label == null)
-              ? 0.hBox
-              : Column(
-                  children: [
-                    Row(
-                      children: [
-                        AppText(
-                          text: label!.upperFirst,
-                          color: ColorResources.TEXT2,
-                          weight: FontWeight.w500,
-                          size: 12,
-                        ),
-                        4.wBox,
-                        if(isrequired==true)
-                        AppText(
-                          text: '*',
-                          color: ColorResources.RED,
-                          weight: FontWeight.w500,
-                          size: 12,
-                        ),
-
-                      ],
-                    ),
-                    5.hBox,
-                  ],
-                ),
-          SizedBox(
-            height: height ?? (multiline!=null?null: 45),
-            child: Center(
-              child: TextFormField(
-                onTap: onTap,
-                onChanged: onChanged,
-                obscureText: isobsecure ?? false,
-                controller: controller,
-                keyboardType: type ?? TextInputType.text,
-                readOnly: readonly ?? false,
-                maxLines: multiline,
-                style: textstyle ??
-                    const TextStyle(
-                      color: ColorResources.TEXT1,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                 inputFormatters: digitsonly==true
-              ? <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))
-                ]
-              : [],
-                textAlign: contentalign ?? TextAlign.start,
-                decoration: InputDecoration(
-                    label: labelshow == true
-                        ? AppText(
-                            text: hinttext ?? '',
-                            color: secondarycolor,
-                            size: 12,
-                            weight: FontWeight.w400,
-                          )
-                        : null,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: padding,vertical:multiline!=null?8: vcontentpadding??0 ),
-                    filled: true,
-                    fillColor:
-                        filledcolor ?? ColorResources.GREY5.withOpacity(0.25),
-                    hintText: hinttext,
-                    prefixIcon: prefix,
-                    suffixIcon: suffix,
-                    hintStyle: hintStyle ??
-                        TextStyle(
-                            color: ColorResources.BLACK.withOpacity(0.4),
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14,
-                            fontFamily: ''),
-                    border: borderstyle ??
-                        OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                          borderSide: BorderSide(
-                              color:ColorResources.ICON_GREY.withOpacity(0.5), width: 1),
-                        ),
-                    focusedBorder: borderstyle ??
-                        OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                          borderSide: BorderSide(
-                              color: ColorResources.ICON_GREY.withOpacity(0.5), width: 1),
-                        ),
-                    enabledBorder: borderstyle ??
-                        OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3),
-                          borderSide: BorderSide(
-                              color: ColorResources.ICON_GREY.withOpacity(0.5), width: 1),
-                        )),
+    return Container(
+      height: 60.78,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+                      color:ColorResources.WHITE.withOpacity(0.5), width: 0.42),
+      ),
+      child: Center(
+        child: TextFormField(
+          onTap: onTap,
+          onChanged: onChanged,
+          obscureText: isobsecure ?? false,
+          controller: controller,
+          keyboardType: type ?? TextInputType.text,
+          readOnly: readonly ?? false,
+          maxLines: multiline,
+          style: textstyle ??
+              const TextStyle(
+                color: ColorResources.WHITE,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
               ),
-            ),
-          ),
-        ],
+           inputFormatters: digitsonly==true
+        ? <TextInputFormatter>[
+            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))
+          ]
+        : [],
+          textAlign: contentalign ?? TextAlign.start,
+          decoration: InputDecoration(
+            
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal:padding ,vertical:multiline!=null?8: vcontentpadding??0 ),
+              // filled: true,
+              // fillColor:
+              //     filledcolor ?? ColorResources.GREY5.withOpacity(0.25),
+              hintText: hinttext,
+              
+              prefixIcon: prefix,
+              suffixIcon: suffix,
+              labelText: label,
+              labelStyle: const TextStyle(
+                color: ColorResources.WHITE,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Montserrat'
+              ),
+              hintStyle: hintStyle ??
+                  const TextStyle(
+                      color: ColorResources.HINTTEXT,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Montserrat',
+                      fontSize: 13,),
+              border:InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder:InputBorder.none,),
+        ),
       ),
     );
   }
