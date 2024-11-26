@@ -86,7 +86,7 @@ class _UploadFeedScreenState extends State<UploadFeedScreen> {
                       body.category = selectedcate;
                      FeedRes res =   await service.uploadfeed(context, body);
                      if (res.status==true) {
-                       service.gethomecontent(context);
+                       await service.gethomecontent(context);
                        Screen.close(context);
                      }
 
