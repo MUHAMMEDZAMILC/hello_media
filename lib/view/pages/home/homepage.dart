@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_media/controller/provider/provideroperation.dart';
+import 'package:hello_media/utils/extension/space_ext.dart';
 import 'package:hello_media/utils/helper/help_loader.dart';
 import 'package:hello_media/utils/helper/help_screensize.dart';
 import 'package:hello_media/utils/helper/pagenavigator.dart';
@@ -137,7 +138,7 @@ class _HomeCardState extends State<HomeCard> {
   late VideoPlayerController controller;
   void initState() {
     controller = VideoPlayerController.networkUrl(Uri.parse(
-        widget.data.video??''),videoPlayerOptions: VideoPlayerOptions())
+        widget.data.video??''),)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
@@ -184,6 +185,28 @@ class _HomeCardState extends State<HomeCard> {
       });
                   }, icon: controller.value.isPlaying==false?Center(child: AppSvg(assetName: playbtnicon)):Icon(Icons.pause,color: ColorResources.WHITE,))
                           //  ControlsOverlay(controller: controller,)
+                 ,  controller.value.isPlaying?       Positioned(
+                  bottom: 0,
+                   child: SizedBox(
+                    width: ScreenUtil.screenWidth,
+                     child: Slider(
+                      thumbColor: primarycolor,
+                      activeColor: primarycolor,
+                                 value: controller.value.isInitialized
+                                     ? controller.value.position.inSeconds.toDouble()
+                                     : 0.0,
+                                 max: controller.value.isInitialized
+                                     ? controller.value.duration.inSeconds.toDouble()
+                                     : 1.0,
+                                 onChanged: (value) async {
+                                  await seekToPosition(Duration(seconds: value.toInt()));
+
+                                   
+
+                                 },
+                               ),
+                   ),
+                 ):0.hBox,
                  ],
                ),
              ),
@@ -219,6 +242,13 @@ class _HomeCardState extends State<HomeCard> {
         ),
       ),
     );
+  }
+  seekToPosition(Duration position) {
+   
+    setState(() {
+       controller.seekTo(position);
+        controller.play();
+    });
   }
   @override
   void dispose() {
