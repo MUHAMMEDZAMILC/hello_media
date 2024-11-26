@@ -9,6 +9,7 @@ import 'package:hello_media/utils/theme/dimensions.dart';
 import 'package:hello_media/utils/theme/theme_data.dart';
 import 'package:hello_media/view/components/apptext.dart';
 import 'package:hello_media/view/components/apptextfeild.dart';
+import 'package:hello_media/view/pages/home/homepage.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
   const OtpVerifyScreen({super.key});
@@ -57,33 +58,38 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
               ),
               Positioned(
                 top: ScreenUtil.screenHeight!*0.6,
-                child:  Container(
-                    height: 50,
-                    width: 136,
-                    decoration: BoxDecoration(
-                      border:Border.all(color: ColorResources.WHITE.withOpacity(0.28),),
-                      borderRadius: BorderRadius.circular(25.5)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          AppText(text: 'Continue',color: ColorResources.WHITE,size: 14,weight: FontWeight.w400,),
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              color: primarycolor,
-                              borderRadius: BorderRadius.circular(25.5),
-                      
-                            ),
-                            child: const Icon(CupertinoIcons.chevron_forward,color: ColorResources.WHITE,),
-                          )
-                        ],
+                child:  InkWell(
+                  onTap: () {
+                    Screen.openAsNewPage(context, const HomeScreen());
+                  },
+                  child: Container(
+                      height: 50,
+                      width: 136,
+                      decoration: BoxDecoration(
+                        border:Border.all(color: ColorResources.WHITE.withOpacity(0.28),),
+                        borderRadius: BorderRadius.circular(25.5)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AppText(text: 'Continue',color: ColorResources.WHITE,size: 14,weight: FontWeight.w400,),
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: primarycolor,
+                                borderRadius: BorderRadius.circular(25.5),
+                        
+                              ),
+                              child: const Icon(CupertinoIcons.chevron_forward,color: ColorResources.WHITE,),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ))
+                ))
             ],
 
           ),
