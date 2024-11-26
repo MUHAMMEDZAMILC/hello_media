@@ -154,7 +154,7 @@ class ColorResources {
     buttonTheme: const ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
     ),
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
      
     ),
   );

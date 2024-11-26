@@ -3,9 +3,7 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hello_media/model/categorymodel.dart';
 import 'package:hello_media/model/feedpost_model.dart';
 import 'package:hello_media/model/feedres_model.dart';
@@ -87,7 +85,7 @@ class _UploadFeedScreenState extends State<UploadFeedScreen> {
                       body.desc = descriptionCtrl.text;
                       body.category = selectedcate;
                      FeedRes res =   await service.uploadfeed(context, body);
-                     if (res==true) {
+                     if (res.status==true) {
                        service.gethomecontent(context);
                        Screen.close(context);
                      }

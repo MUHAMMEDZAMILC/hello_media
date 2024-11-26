@@ -10,7 +10,7 @@ class AppRichText extends StatelessWidget {
   final double? letterspace, richletterspace;
 
   const AppRichText(
-      {Key? key,
+      {super.key,
       required this.normalText,
       required this.richText,
       this.fontFamily,this.richfontFamily,
@@ -21,8 +21,7 @@ class AppRichText extends StatelessWidget {
       this.fontSize,
       this.richTextFontSize,
       this.letterspace,
-      this.richletterspace})
-      : super(key: key);
+      this.richletterspace});
 
   @override
   Widget build(BuildContext context) {

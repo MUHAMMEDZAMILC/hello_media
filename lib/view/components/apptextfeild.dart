@@ -1,13 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hello_media/utils/extension/space_ext.dart';
-import 'package:hello_media/utils/extension/upperfstring_ext.dart';
-import 'package:hello_media/view/components/apptext.dart';
 import '../../utils/helper/help_screensize.dart';
 import '../../utils/theme/colors.dart';
 import '../../utils/theme/dimensions.dart';
-import '../../utils/theme/theme_data.dart';
 
 // ignore: must_be_immutable
 class AppTextFeild extends StatelessWidget {
